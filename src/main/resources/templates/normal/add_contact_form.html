@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/base::layout(~{::section},'Add Contact')}">
+<head>
+<title></title>
+</head>
+<body>
+	<section >
+
+		<div class="card mr-3 ">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-10 offset-md-1 ">
+					<div  th:if="${message}"  th:classappend="${message.type}" class="alert" role="alert">
+							<p th:text="${message.content}"></p>
+							
+							<!-- <th:block th:text="${#session.removeAttribute('message')}" ></th:block> -->
+							 </div>
+					<h1 class="text-center">Add Contact!!</h1>
+						<form action="#" th:action="@{/user/process-contact}"
+							th:object="${contact}" enctype="multipart/form-data"
+							method="post" class="mt-2">
+                             
+							<!--First Name  -->
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text ">
+										<i class="fa fa-plus"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control " th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+									placeholder="Enter Name Here" name="name" id="firstName"
+									  th:value="${contact.name}">
+								<div class="invalid-feedback" th:each="e:${#fields.errors('name')}" th:text="${e}"></div>
+							</div>
+
+							<!--Second Name  -->
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text ">
+										<i class="fas fa-user-alt"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control"
+									placeholder="Enter Nick Name Here" name="secondName"
+									id="secondName" th:value="${contact.secondName}">
+							</div>
+
+							<!--Phone   -->
+							<div class="input-group mt-3" >
+								<div class="input-group-prepend">
+									<div class="input-group-text ">
+										<i class="fas fa-phone"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control " th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}"
+									placeholder="Enter Phone Number Here" 
+									name="phone" id="phone" th:value="${contact.phone}">
+								<div class="invalid-feedback" th:each="e:${#fields.errors('phone')}" th:text="${e}"></div>
+							</div>
+
+							<!--Email  -->
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text ">
+										<i class="fas fa-envelope"></i>
+									</div>
+								</div>
+								<input type="email" class="form-control" th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}"
+									placeholder="Enter Email Here" name="email" id="email" th:value="${contact.email}">
+								<div class="invalid-feedback" th:each="e:${#fields.errors('email')}" th:text="${e}"></div>
+							</div>
+
+							<!--Work  -->
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text ">
+										<i class="fas fa-briefcase"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control"
+									placeholder="Enter Occupation Here" name="work" id="work" th:value="${contact.work}">
+							</div>
+
+							<!--Description  -->
+							<div class="input-group mt-3">
+								
+								<textarea class="form-control" 
+								placeholder="Enter contact Description" 
+								aria-label="With textarea" 
+								name="description" id="textarea" rows="8" th:text="${contact.description}"></textarea>
+							</div>
+                              
+                              <!-- Contact Image -->
+                              
+                              <div class="custom-file mt-3">
+                                <input type="file" name="profileImage" />
+                              </div>
+                              <div class="container text-center mt-3">
+                              <button type="submit" class="btn btn-lg bt-color">Submit</button>
+                              </div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<script src="https://cdn.tiny.cloud/1/83e5f2eq1tuqbd966lel3ewzthokk5dicf441ys195gu3ozs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+      tinymce.init({
+       selector: '#textarea'
+  });
+  </script>
+
+</section>
+</body>
+</html>

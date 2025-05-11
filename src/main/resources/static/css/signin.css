@@ -1,0 +1,38 @@
+@charset "UTF-8";
+body {
+            background: #dff0f5;
+        }
+
+        .my-card {
+            background-color: #b3e0f2;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+        }
+
+        .btn-login {
+            background-color: #00cba9;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #009e85;
+        }
+
+        .btn-forgot {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-forgot:hover {
+            background-color: #e0a800;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section},'User Dashboard')}">
+<head>
+    <title></title>
+</head>
+<body>
+<section class="">
+
+<div class="card mr-3 ml-3">
+	<div class="card-body" >
+	<h1>This is Profile page</h1>
+ <div class="container text-center align-items-center">
+				 <!-- <div th:if="${message}" class="alert" th:classappend="'alert-'+${message.type}" role="alert">
+			     <p th:text="${message.content}"></p>
+			     </div> -->
+					<!-- Profile picture -->
+					<img th:if="${user.imageUrl!=null}" src=""
+						class="contacts_profile_picture_big mr-2"
+						th:src="@{'/img/'+${user.imageUrl}}" alt="" />
+					<!-- Default profile  -->
+					<div class="d-flex justify-content-center">
+						<div th:if="${user.imageUrl==null}" class="avatar-big"
+							th:text="${user.name.substring(0,1)} + ${user.name.split(' ').length > 1 ? user.name.split(' ')[1].substring(0,1) : ''}">
+						</div>
+					</div>
+					<!-- Name -->
+					<h3 class="name">
+						<span th:text="${user.name}" class=""></span>
+					</h3>
+				<!-- 	Table for other details  -->
+					<table class="table" id="table">
+						<thead>
+							<tr class="table-danger">
+								<th scope="col">#USERID</th>
+								<th scope="col"><span th:text="${user.id}"></span></th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="table-success">
+								<th scope="row">Account Activity</th>
+								<td><span th:text="${user.enabled}"></span></td>
+								
+							</tr>
+							<tr class="table-warning">
+								<th scope="row">Email</th>
+								<td><span th:text="${user.email}"></span></td>
+							</tr>
+							<tr class="table-info">
+								<th scope="row">Role</th>
+								<td><span th:text="${user.role}"></span></td>
+							</tr>
+						</tbody>
+						
+					</table>
+					<div class="description">
+					  <th:block th:utext="${user.about}"></th:block>
+					</div>
+					
+  </div>
+</div>
+</section>
+ </body>
+</html>
