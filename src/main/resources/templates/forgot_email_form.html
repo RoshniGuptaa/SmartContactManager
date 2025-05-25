@@ -1,0 +1,45 @@
+<!-- src/main/resources/templates/home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section},Forgot_Password)}">
+<head>
+    <title>Forgot password</title>
+</head>
+<body>
+<section class="signin-bg">
+
+<div  class="container">
+            <div class="row  justify-content-center">
+                <div class="col-md-6">
+                    <div class="my-card text-center">
+                        <div  th:if="${message}"  th:classappend="'alert-'+${message.type}" class="alert" role="alert">
+							<p th:text="${message.content}"></p>
+							
+							<!-- <th:block th:text="${#session.removeAttribute('message')}" ></th:block> -->
+							 </div>
+                        <h2 class="mb-4">Your Registered Email</h2>
+                           
+                        <form  th:action="@{/send-otp}" method="post">
+                        
+                        <div th:if="${param.error}" class="alert alert-danger">Invalid username or password</div>
+                        <div th:if="${param.logout}" class="alert alert-success">Yot have been logout</div>
+                            <div class="form-group text-left">
+                                <label class="form-label" for="email">Your Email</label>
+                                <input  type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+                            </div>
+
+                            
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-login btn-block">Send OTP</button>
+                                
+                            </div>
+                            
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+ </body>
+</html>

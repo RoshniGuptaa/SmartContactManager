@@ -1,0 +1,46 @@
+<!-- src/main/resources/templates/home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section},Verify)}">
+<head>
+    <title>Verify otp</title>
+</head>
+<body>
+<section class="signin-bg">
+
+<div  class="container">
+            <div class="row  justify-content-center">
+                <div class="col-md-6">
+                    <div class="my-card text-center">
+                        
+                        <h2 class="mb-4">Verify OTP...</h2>
+                           <div th:if="${message}" th:classappend="'alert-'+${message.type}"
+							class="alert" role="alert">
+							<p th:text="${message.content}"></p>
+
+							<!-- <th:block th:text="${#session.removeAttribute('message')}" ></th:block> -->
+						</div>
+                        <form  th:action="@{/verify-otp}" method="post">
+                        
+                         <div  class="alert alert-success">We have sent OTP to your email...</div> 
+                        
+                            <div class="form-group text-left">
+
+                                <input  type="text" class="form-control" id="email" placeholder="Enter OTP" name="otp" required>
+                            </div>
+
+                            
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-login btn-block">Verify</button>
+                                
+                            </div>
+                            
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+ </body>
+</html>

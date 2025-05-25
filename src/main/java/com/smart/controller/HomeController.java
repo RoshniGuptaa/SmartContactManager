@@ -1,6 +1,11 @@
 package com.smart.controller;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +19,7 @@ import com.smart.dao.UserRepository;
 import com.smart.entities.User;
 //import com.smart.helper.Message;
 import com.smart.helper.Message;
+import com.smart.service.EmailService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -21,10 +27,14 @@ import jakarta.validation.Valid;
 @Controller
 public class HomeController {
 
+	Random random =new Random(1000);
 	@Autowired
 	 private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository ;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@GetMapping("/")
 	public String home()
@@ -83,8 +93,13 @@ public class HomeController {
 	}
 	
 	@GetMapping("/signin")
-	public String customLogin(Model model)
+	public String customLogin(Model model,HttpSession session)
 	{
+		Object message = session.getAttribute("message");
+		if (message != null) {
+	        model.addAttribute("message", message);
+	        session.removeAttribute("message");
+	    }
 		return "signin";
 	}
 	
@@ -94,6 +109,47 @@ public class HomeController {
 	{
 		return "about";
 	}
+	
+	@PostMapping("/send-otp-verification")
+    public ResponseEntity<String> sendOTP(@RequestParam("email")String email,HttpSession session) {
+		
+		//creating otp
+   	 SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            sb.append(random.nextInt(10)); // Generates a random digit (0-9)
+        }
+           String otp= sb.toString();
+   	
+    	
+    	//send otp to email code..
+    	String subject="OTP from SME";
+    	String message="OTP="+otp;
+    	boolean flag = emailService.sendEmail(message, subject, email);
+    	 
+    	if(flag)
+    	{
+    		session.setAttribute("otp", otp);
+    		session.setAttribute("email", email);
+    		return ResponseEntity.ok("OTP sent");
+    	}
+    	else {
+    		session.setAttribute("message", new Message("check your email id !!","success"));
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("OTP not sent");
+    	}
+	}
+	
+	@PostMapping("/verify-register-otp")
+    public ResponseEntity<String> verifyRegisterOtp(@RequestParam String email, @RequestParam String otp,HttpSession session) {
+		
+        String savedOtp = (String) session.getAttribute("otp");
+        System.out.println(savedOtp +" : "+otp);
+        if (savedOtp != null && savedOtp.equals(otp)) {
+            return ResponseEntity.ok("Verified");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
+        }
+    }
 	
 	
 }

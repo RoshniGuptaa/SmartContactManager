@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section},'User Dashboard')}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/base::layout(~{::section},'User Dashboard')}">
 <head>
-    <title></title>
+<title></title>
 </head>
 <body>
-<section class="">
+	<section class="">
 
-<div class="text-center">
-<!-- <h1>This is dashboard</h1> -->
-  <div class="container">
-    <div class="card m-4">
-       <div class="card-body">
-          <img src="" class=" mr-2" style="height: 300px; width: 300px"
-						th:src="@{'/img/contact_logo.png'}" alt="" />
-		 <h1 class="text-center m-3 text-primary">
-		   <i>Start Adding your contacts ......</i> 
-		   <a th:href="@{/user/add-contact}" class="btn btn-block text-uppercase bt-color-secondary mt-2">Add New Contact </a>
-		 </h1>
-       </div>
-    </div> 
- </div>
- 
+		<div class="text-center">
+			<!-- <h1>This is dashboard</h1> -->
+			<div class="container">
+			<div th:if="${message}" th:classappend="'alert'+${message.type}"
+						class="alert" role="alert">
+						<p th:text="${message.content}"></p>
+					</div>
+				<div class="card m-4">
+					
+					<div class="card-body">
+						<img src="" class=" mr-2" style="height: 300px; width: 300px"
+							th:src="@{'/img/contact_logo.png'}" alt="" />
+						<h1 class="text-center m-3 text-primary">
+							<i>Start Adding your contacts ......</i> <a
+								th:href="@{/user/add-contact}"
+								class="btn btn-block text-uppercase bt-color-secondary mt-2">Add
+								New Contact </a>
+						</h1>
+					</div>
+				</div>
+			</div>
 
-</div>
-</section>
- </body>
+
+		</div>
+	</section>
+</body>
 </html>
